@@ -1,0 +1,8 @@
+playwright==1.47.0
+pytest==8.3.3
+pytest-playwright>=0.5.0
+pytest-base-url==2.1.0
+python-dotenv==1.0.1
+pytest-html>=4.1.1
+pytest-xdist>=3.6.0  # Optional: For running tests in parallel across multiple CPUs
+
