@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main, master]
   workflow_dispatch:
+    inputs:
+      test_path:
+        description: "Test path, file, or marker expression to run (e.g. tests/test_auth.py or -k 'cart')"
+        required: false
+        default: ""
+        type: string
 
 jobs:
   test:
@@ -32,7 +38,7 @@ jobs:
         run: playwright install --with-deps chromium
 
       - name: Run tests
-        run: pytest --tracing retain-on-failure
+        run: pytest --tracing retain-on-failure ${{ github.event.inputs.test_path }}
         #run: pytest --html=report.html --self-contained-html
 
       - name: Upload test results
