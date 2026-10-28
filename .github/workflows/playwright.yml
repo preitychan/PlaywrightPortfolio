@@ -37,17 +37,20 @@ jobs:
       - name: Install Playwright browsers
         run: playwright install --with-deps chromium
 
+      - name: Set report timestamp
+        run: echo "REPORT_DIR=playwright-report-$(date +'%Y%m%d-%H%M%S')" >> "$GITHUB_ENV"
+
       - name: Run tests
-        run: pytest --tracing retain-on-failure --html=playwright-report/report.html --self-contained-html ${{ github.event.inputs.test_path }}
+        run: pytest --tracing retain-on-failure --html=${{ env.REPORT_DIR }}/report.html --self-contained-html ${{ github.event.inputs.test_path }}
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: ${{ env.REPORT_DIR }}
           path: |
             test-results/
-            playwright-report/
+            ${{ env.REPORT_DIR }}/
           if-no-files-found: warn
           retention-days: 7
 
