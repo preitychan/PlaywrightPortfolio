@@ -38,8 +38,7 @@ jobs:
         run: playwright install --with-deps chromium
 
       - name: Run tests
-        run: pytest --tracing retain-on-failure ${{ github.event.inputs.test_path }}
-        #run: pytest --html=report.html --self-contained-html
+        run: pytest --tracing retain-on-failure --html=playwright-report/report.html --self-contained-html ${{ github.event.inputs.test_path }}
 
       - name: Upload test results
         if: always()
@@ -49,6 +48,6 @@ jobs:
           path: |
             test-results/
             playwright-report/
-          #path: report.html
+          if-no-files-found: warn
           retention-days: 7
 
