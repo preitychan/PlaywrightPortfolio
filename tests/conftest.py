@@ -38,12 +38,4 @@ def checkout_page(page: Page) -> CheckoutPage:
     return CheckoutPage(page)
 
 
-@pytest.fixture
-def logged_in_page(page: Page, users) -> Page:
-    """Returns a page already logged in as the standard user."""
-    login = LoginPage(page)
-    login.goto()
-    login.login(users["standard_user"]["username"], users["standard_user"]["password"])
-    page.wait_for_url("**/inventory.html")
-    return page
 
